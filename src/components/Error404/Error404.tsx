@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Contact() {
+function Error404() {
     return (
         <div>
-            Contact Page
+            Error404 page
         </div>
     );
 }
 
-export default Contact
+export default Error404
