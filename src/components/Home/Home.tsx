@@ -1,21 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
+
 function Home() {
-    const [pages, setPages] = useState([]);
+    // interface Iposts {
+    //     [index: number]: object
+    // }
+    const [posts, setPosts] = useState<any | undefined>([]);
 
     useEffect(() => {
-        async function fetchData() {
-            const request = await axios.get("https://jsonplaceholder.typicode.com/posts")
-            console.log(request.data)
-            setPages(request.data)
-        }
-        fetchData()
+        axios.get("https://jsonplaceholder.typicode.com/posts")
+            .then(res => {
+                console.log(res)
+                setPosts(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }, [])
 
     return (
         <div>
-            Home Page
+            <ul>
+                {
+                    posts.map((post: {
+                        id: number | undefined,
+                        title: string | undefined
+                    }) => <li key={post.id}>{post!.title}</li>)
+                }
+            </ul>
         </div>
     );
 }
