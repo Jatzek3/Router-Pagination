@@ -11,8 +11,8 @@ function App() {
       <Navigation />
       <Switch>
         <Route path='/about' component={About} />
-        <Route path="/:page" component={Home} />
-        <Route path='/' component={Home} />
+        <Route path="/:pageNumber" component={Home} />
+        <Route path={'/' || '/1'} component={Home} />
       </Switch>
     </BrowserRouter>
   );

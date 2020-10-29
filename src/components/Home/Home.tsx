@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from "react-router-dom"
 
 import { Link } from 'react-router-dom'
 
@@ -11,8 +12,17 @@ function Home() {
     // }
     const [posts, setPosts] = useState<any | undefined>([]);
     const [page, setPage] = useState<any | undefined>([]);
+    const { pageNumber }: { pageNumber: string | undefined } = useParams()
+
+    // const start = ((pageNumber - 1) * 5) | 0;
+    // const stop = pageNumber * 5 | 5;
+    // const previousSite = pageNumber - 1;
+    // const nextSite = pageNumber + 1
 
     useEffect(() => {
+        // console.log(start, stop)
+        console.log(pageNumber)
+
         axios.get("https://jsonplaceholder.typicode.com/posts")
             .then(res => {
                 console.log(res)
@@ -22,7 +32,9 @@ function Home() {
             .catch(err => {
                 console.log(err)
             })
-    }, [page])
+    }, [])
+
+
 
     return (
         <div>
