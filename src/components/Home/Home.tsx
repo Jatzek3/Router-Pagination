@@ -19,7 +19,7 @@ function Home() {
 
     const start = (siteNumber - 1) * 5
     const stop = siteNumber * 5 | 5;
-    const previousSite = siteNumber - 1;
+    const previousSite = (siteNumber - 1 > 0) ? siteNumber - 1 : 0;
     const nextSite = siteNumber + 1
 
     useEffect(() => {
@@ -55,8 +55,8 @@ function Home() {
                     >{post!.title}</li>)
                 }
             </ul>
-            <li><Link to={`/`}>Back</Link></li>
-            <li><Link to={`/`}>Forward</Link></li>
+            <li><Link to={`/${previousSite}`}>Back</Link></li>
+            <li><Link to={`/${nextSite}`}>Forward</Link></li>
         </div>
     );
 }
