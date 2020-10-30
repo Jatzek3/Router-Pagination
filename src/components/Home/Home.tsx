@@ -14,25 +14,29 @@ function Home() {
     const [page, setPage] = useState<any | undefined>([]);
     const { pageNumber }: { pageNumber: string | undefined } = useParams()
 
-    // const start = ((pageNumber - 1) * 5) | 0;
-    // const stop = pageNumber * 5 | 5;
-    // const previousSite = pageNumber - 1;
-    // const nextSite = pageNumber + 1
+    const siteNumber: number = pageNumber ? Number(pageNumber) : 1
+
+    const start = (siteNumber - 1) * 5
+    const stop = siteNumber * 5 | 5;
+    const previousSite = siteNumber - 1;
+    const nextSite = siteNumber + 1
 
     useEffect(() => {
-        // console.log(start, stop)
-        console.log(pageNumber)
+        console.log(start, stop)
 
         axios.get("https://jsonplaceholder.typicode.com/posts")
             .then(res => {
                 console.log(res)
                 setPosts(res.data)
             })
-            .then(() => setPage(posts.slice(0, 5)))
             .catch(err => {
                 console.log(err)
             })
     }, [])
+    useEffect(() => {
+        setPage(posts.slice(start, stop))
+    }, [pageNumber, posts])
+
 
 
 
