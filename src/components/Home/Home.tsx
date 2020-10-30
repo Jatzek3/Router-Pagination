@@ -17,8 +17,8 @@ function Home() {
 
     const siteNumber: number = pageNumber ? Number(pageNumber) : 1
 
-    const start = (siteNumber - 1) * 5
-    const stop = siteNumber * 5 | 5;
+    const start = siteNumber * 5
+    const stop = (siteNumber + 1) * 5;
     const previousSite = (siteNumber - 1 > 0) ? siteNumber - 1 : 0;
     const nextSite = siteNumber + 1
 
@@ -36,7 +36,7 @@ function Home() {
     }, [])
     useEffect(() => {
         setPage(posts.slice(start, stop))
-        console.log(posts)
+        console.log(page, start, stop)
     }, [pageNumber, posts])
 
 
