@@ -16,6 +16,7 @@ function Home() {
     const [page, setPage] = useState<any | undefined>([]);
 
 
+    const [search, setSearch] = useState<any | undefined>([])
     const { pageNumber }: { pageNumber: string | undefined } = useParams()
 
     const siteNumber: number = pageNumber ? Number(pageNumber) : 1
@@ -26,8 +27,6 @@ function Home() {
     const nextSite = siteNumber + 1
 
     useEffect(() => {
-
-
         axios.get("https://jsonplaceholder.typicode.com/posts")
             .then(res => {
                 console.log(res)
@@ -38,17 +37,23 @@ function Home() {
             })
     }, [])
 
+
+
     useEffect(() => {
-        setPage(posts.slice(start, stop))
+        // setFiltered(!search ? posts : posts.filter(
+        //     (post: { title: any; }) => { return post.title.includes(search.toLowerCase()) }))
+        setFiltered(posts)
+        setPage(filtered!.slice(start, stop))
         console.log(page, start, stop)
-    }, [pageNumber, posts])
+    }, [pageNumber, posts, search])
 
 
 
 
     return (
         <div>
-            <input type="text" placeholder="Search"></input>
+            {/* Need to upack the serch or smth */}
+            <input type="text" placeholder="Search" onChange={e => setSearch(e)}></input>
             <ul>
                 {
                     page.map((post: {
