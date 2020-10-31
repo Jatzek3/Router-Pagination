@@ -12,7 +12,10 @@ function Home() {
     //     [index: number]: object
     // }
     const [posts, setPosts] = useState<any | undefined>([]);
+    const [filtered, setFiltered] = useState<object[] | undefined>([])
     const [page, setPage] = useState<any | undefined>([]);
+
+
     const { pageNumber }: { pageNumber: string | undefined } = useParams()
 
     const siteNumber: number = pageNumber ? Number(pageNumber) : 1
@@ -34,6 +37,7 @@ function Home() {
                 console.log(err)
             })
     }, [])
+
     useEffect(() => {
         setPage(posts.slice(start, stop))
         console.log(page, start, stop)
@@ -44,6 +48,7 @@ function Home() {
 
     return (
         <div>
+            <input type="text" placeholder="Search"></input>
             <ul>
                 {
                     page.map((post: {
