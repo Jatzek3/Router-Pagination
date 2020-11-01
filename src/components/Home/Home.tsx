@@ -16,7 +16,7 @@ function Home() {
     const [page, setPage] = useState<any | undefined>([]);
 
 
-    const [search, setSearch] = useState<any | undefined>([])
+    const [search, setSearch] = useState<string | undefined>('')
     const { pageNumber }: { pageNumber: string | undefined } = useParams()
 
     const siteNumber: number = pageNumber ? Number(pageNumber) : 1
@@ -44,7 +44,7 @@ function Home() {
         //     (post: { title: any; }) => { return post.title.includes(search.toLowerCase()) }))
         setFiltered(posts)
         setPage(filtered!.slice(start, stop))
-        console.log(page, start, stop)
+        console.log(search)
     }, [pageNumber, posts, search])
 
 
@@ -52,8 +52,9 @@ function Home() {
 
     return (
         <div>
-            {/* Need to upack the serch or smth */}
-            <input type="text" placeholder="Search" onChange={e => setSearch(e)}></input>
+            {/*setSearch(search! + e)*/}
+            <input type="text" placeholder="Search"
+                onChange={event => setSearch(search + event.target.value)}></input>
             <ul>
                 {
                     page.map((post: {
