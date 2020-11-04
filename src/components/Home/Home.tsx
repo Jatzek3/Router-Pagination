@@ -11,7 +11,7 @@ function Home() {
     // interface Ipost {
     //     [index: number]: object
     // }
-    const [posts, setPosts] = useState<any | undefined>([]);
+    const [posts, setPosts] = useState<any | undefined>([])
 
     const [filtered, setFiltered] = useState<object[] | undefined>([])
     const [search, setSearch] = useState<string | undefined>('')
@@ -67,16 +67,30 @@ function Home() {
                         id: number | undefined,
                         title: string | undefined
                     }) => <ListGroupItem
+                        className={"list-item"}
                         key={post.id}
                         color={(post.id && post.id % 2 !== 0) ? "success" : "warning"}
                     >{post!.title}</ListGroupItem>)
                 }
             </ListGroup>
             {/* A little problem that on start it display blank page instead of 1st */}
-            <Button color="secondary"><Link to={`/${previousSite}`}>Back</Link></Button>
-            <Button color="secondary"><Link to={`/${nextSite}`}>Forward</Link></Button>
+            <Link to={`/${previousSite}`}><Button color="primary">Back</Button></Link>
+            <Link to={`/${nextSite}`}><Button color="primary">Forward</Button></Link>
         </div>
     );
 }
 
 export default Home
+
+
+// const addAcolor = (ListOfObjects: any) => {
+
+//     for (let i = 0; i < ListOfObjects.length; i++) {
+//         if (i % 2 === 0) {
+//             ListOfObjects[i].color = "success"
+//         } else {
+//             ListOfObjects[i].color = "warning"
+//         }
+//     }
+
+// }
