@@ -1,12 +1,6 @@
-.navigation__list{
-    display: flex;
-    width: 100%;
-    background-color: #BAD669;
-    text-decoration: none;
-    height: 5em;
-    font-size: 2em;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    justify-content: space-around;
-    align-items: center
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
+h1 {
+    font-family: 'Lobster', cursive;
+    font-size: 2em;
 }

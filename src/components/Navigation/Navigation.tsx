@@ -7,6 +7,7 @@ import {
     Nav,
     NavItem,
     NavLink,
+    NavbarBrand,
 } from 'reactstrap';
 
 
@@ -14,7 +15,8 @@ import {
 function Navigation() {
     return (
         <Navbar color="light" light expand="md">
-            <Nav className="mr-auto" navbar>
+            <h1>Let's Paginate!</h1>
+            <Nav className="ml-auto" navbar>
                 <NavItem>
                     <NavLink><Link to='/'>Home</Link></NavLink>
                 </NavItem>
