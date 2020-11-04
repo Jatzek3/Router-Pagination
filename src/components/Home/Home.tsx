@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from "react-router-dom";
-import './Home.scss';
-
 import { Link } from 'react-router-dom'
 
+import axios from 'axios';
 
+import { Button, ListGroup, ListGroupItem, Input } from 'reactstrap';
+import './Home.scss';
 
 function Home() {
     // interface Ipost {
@@ -55,26 +55,26 @@ function Home() {
 
     return (
         <div>
-            <input type="text"
+            <Input type="text"
                 placeholder="Search"
                 value={search}
                 onChange={event =>
                     setSearch(event.target.value)}>
-            </input>
-            <ul>
+            </Input>
+            <ListGroup>
                 {
                     page.map((post: {
                         id: number | undefined,
                         title: string | undefined
-                    }) => <li
+                    }) => <ListGroupItem
                         key={post.id}
-                        className={(post.id && post.id % 2 !== 0) ? "list__item--black" : "list__item--red"}
-                    >{post!.title}</li>)
+                        color={(post.id && post.id % 2 !== 0) ? "success" : "warning"}
+                    >{post!.title}</ListGroupItem>)
                 }
-            </ul>
+            </ListGroup>
             {/* A little problem that on start it display blank page instead of 1st */}
-            <li><Link to={`/${previousSite}`}>Back</Link></li>
-            <li><Link to={`/${nextSite}`}>Forward</Link></li>
+            <Button color="secondary"><Link to={`/${previousSite}`}>Back</Link></Button>
+            <Button color="secondary"><Link to={`/${nextSite}`}>Forward</Link></Button>
         </div>
     );
 }
