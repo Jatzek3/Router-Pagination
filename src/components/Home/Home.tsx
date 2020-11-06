@@ -11,13 +11,12 @@ function Home() {
     // interface Ipost {
     //     [index: number]: object
     // }
-    const [posts, setPosts] = useState<any | undefined>([])
-
+    const [posts, setPosts] = useState<object[] | undefined>([])
     const [filtered, setFiltered] = useState<object[] | undefined>([])
+    const [colored, setColored] = useState<object[] | undefined>([])
+    const [page, setPage] = useState<object[] | undefined>([]);
+
     const [search, setSearch] = useState<string | undefined>('')
-
-    const [page, setPage] = useState<any | undefined>([]);
-
 
     const { pageNumber }: { pageNumber: string | undefined } = useParams()
     const siteNumber: number = pageNumber ? Number(pageNumber) : 1
@@ -44,10 +43,11 @@ function Home() {
 
     useEffect(() => {
         // Im not sure about this
-        setFiltered(!search ? posts : posts.filter(
-            (post: { title: any; }) => { return post.title.toLowerCase().includes(search.toLowerCase()) }))
-        setPage(filtered!.slice(start, stop))
-        console.log(search)
+        setFiltered(!search ? posts : posts!.filter(
+            (post: any) => { return post.title.toLowerCase().includes(search.toLowerCase()) }))
+        setColored(addAcolor(filtered!))
+        setPage(colored!.slice(start, stop))
+        console.log(search, pageNumber, start, stop)
     }, [pageNumber, posts, search])
 
 
@@ -63,13 +63,10 @@ function Home() {
             </Input>
             <ListGroup>
                 {
-                    page.map((post: {
-                        id: number | undefined,
-                        title: string | undefined
-                    }) => <ListGroupItem
+                    page!.map((post: any) => <ListGroupItem
                         className={"list-item"}
                         key={post.id}
-                        color={(post.id && post.id % 2 !== 0) ? "success" : "warning"}
+                        color={post.color}
                     >{post!.title}</ListGroupItem>)
                 }
             </ListGroup>
@@ -83,14 +80,17 @@ function Home() {
 export default Home
 
 
-// const addAcolor = (ListOfObjects: any) => {
-
-//     for (let i = 0; i < ListOfObjects.length; i++) {
-//         if (i % 2 === 0) {
-//             ListOfObjects[i].color = "success"
-//         } else {
-//             ListOfObjects[i].color = "warning"
-//         }
-//     }
-
-// }
+const addAcolor = (ListOfObjects: object[]) => {
+    let newListOfObjects = []
+    for (let i = 0; i < ListOfObjects.length; i++) {
+        if (i % 2 === 0) {
+            const newObject = { ...ListOfObjects[i], color: 'success' }
+            newListOfObjects.push(newObject)
+        }
+        else {
+            const newObject = { ...ListOfObjects[i], color: 'warning' }
+            newListOfObjects.push(newObject)
+        }
+    }
+    return newListOfObjects
+}
