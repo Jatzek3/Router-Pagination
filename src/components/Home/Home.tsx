@@ -71,8 +71,8 @@ function Home() {
                 }
             </ListGroup>
             {/* A little problem that on start it display blank page instead of 1st */}
-            <Link to={`/${previousSite}`}><Button color="primary">Back</Button></Link>
-            <Link to={`/${nextSite}`}><Button color="primary">Forward</Button></Link>
+            <Link to={`/${previousSite}`}><Button disabled={!siteNumber ? true : false} color="primary">Back</Button></Link>
+            <Link to={`/${nextSite}`}><Button disabled={nextSite * 5 >= posts!.length ? true : false} color="primary">Forward</Button></Link>
         </div>
     );
 }
