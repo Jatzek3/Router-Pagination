@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom'
-
 import axios from 'axios';
+
+import Ipost from './utils/Ipost';
+import addAcolor from './utils/addColor';
+
 
 import { Button, ListGroup, ListGroupItem, Input } from 'reactstrap';
 import './Home.scss';
 
+
 function Home() {
-    // interface Ipost {
-    //     [index: number]: object
-    // }
-    const [posts, setPosts] = useState<object[] | undefined>([])
-    const [filtered, setFiltered] = useState<object[] | undefined>([])
-    const [colored, setColored] = useState<object[] | undefined>([])
-    const [page, setPage] = useState<object[] | undefined>([]);
 
-    const [search, setSearch] = useState<string | undefined>('')
+    const [posts, setPosts] = useState<Ipost[]>([])
+    const [filtered, setFiltered] = useState<Ipost[]>([])
+    const [colored, setColored] = useState<Ipost[]>([])
+    const [page, setPage] = useState<Ipost[]>([]);
 
-    const { pageNumber }: { pageNumber: string | undefined } = useParams()
-    const siteNumber: number = pageNumber ? Number(pageNumber) : 1
+    const [search, setSearch] = useState<string>('')
+
+    const { pageNumber }: { pageNumber: string } = useParams()
+    const siteNumber: number = pageNumber ? Number(pageNumber) : 0
 
     const start = siteNumber * 5
     const stop = (siteNumber + 1) * 5;
@@ -27,8 +29,6 @@ function Home() {
     const nextSite = siteNumber + 1
 
     useEffect(() => {
-        // This could be better if key was generated on on filtering than from Api
-        // the you could display any input whith bachground colored
         axios.get("https://jsonplaceholder.typicode.com/posts")
             .then(res => {
                 console.log(res)
@@ -42,12 +42,14 @@ function Home() {
 
 
     useEffect(() => {
-        // Im not sure about this
-        setFiltered(!search ? posts : posts!.filter(
-            (post: any) => { return post.title.toLowerCase().includes(search.toLowerCase()) }))
-        setColored(addAcolor(filtered!))
-        setPage(colored!.slice(start, stop))
-        console.log(search, pageNumber, start, stop)
+        const logic = () => {
+            setFiltered(!search ? posts : posts!.filter(
+                (post: Ipost) => { return post.title.toLowerCase().includes(search.toLowerCase()) }))
+            setColored(addAcolor(filtered!))
+            setPage(colored!.slice(start, stop))
+            console.log(search, pageNumber, start, stop, page)
+        }
+        logic()
     }, [pageNumber, posts, search])
 
 
@@ -63,11 +65,13 @@ function Home() {
             </Input>
             <ListGroup>
                 {
-                    page!.map((post: any) => <ListGroupItem
+                    page.length != 0 ? page.map((post: Ipost) => <ListGroupItem
                         className={"list-item"}
                         key={post.id}
                         color={post.color}
                     >{post!.title}</ListGroupItem>)
+                        :
+                        <h1> No ones here</h1>
                 }
             </ListGroup>
             {/* A little problem that on start it display blank page instead of 1st */}
@@ -79,18 +83,3 @@ function Home() {
 
 export default Home
 
-
-const addAcolor = (ListOfObjects: object[]) => {
-    let newListOfObjects = []
-    for (let i = 0; i < ListOfObjects.length; i++) {
-        if (i % 2 === 0) {
-            const newObject = { ...ListOfObjects[i], color: 'success' }
-            newListOfObjects.push(newObject)
-        }
-        else {
-            const newObject = { ...ListOfObjects[i], color: 'warning' }
-            newListOfObjects.push(newObject)
-        }
-    }
-    return newListOfObjects
-}
