@@ -16,7 +16,7 @@ function App() {
         <Switch>
           <Route path='/about' component={About} />
           <Route path="/:pageNumber" component={Home} />
-          <Route path={'/' || '/1'} component={Home} />
+          <Route path={'/'} component={Home} />
         </Switch>
       </BrowserRouter>
     </Container>

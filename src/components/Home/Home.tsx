@@ -14,8 +14,6 @@ import './Home.scss';
 function Home() {
 
     const [posts, setPosts] = useState<Ipost[]>([])
-    const [filtered, setFiltered] = useState<Ipost[]>([])
-    const [colored, setColored] = useState<Ipost[]>([])
     const [page, setPage] = useState<Ipost[]>([]);
 
     const [search, setSearch] = useState<string>('')
@@ -31,8 +29,8 @@ function Home() {
     useEffect(() => {
         axios.get("https://jsonplaceholder.typicode.com/posts")
             .then(res => {
-                console.log(res)
                 setPosts(res.data)
+                setPage(res.data.slice(0, 5))
             })
             .catch(err => {
                 console.log(err)
@@ -42,15 +40,14 @@ function Home() {
 
 
     useEffect(() => {
-        const logic = () => {
-            setFiltered(!search ? posts : posts!.filter(
-                (post: Ipost) => { return post.title.toLowerCase().includes(search.toLowerCase()) }))
-            setColored(addAcolor(filtered!))
-            setPage(colored!.slice(start, stop))
-            console.log(search, pageNumber, start, stop, page)
-        }
-        logic()
-    }, [pageNumber, posts, search])
+        const filt = !search ? posts :
+            posts!.filter((post: Ipost) => {
+                return post.title.toLowerCase().includes(search.toLowerCase())
+            })
+        setPage(addAcolor(filt).slice(start, stop))
+        console.log(posts, page, "use effect sideE")
+    }, [posts, pageNumber, search])
+
 
 
 
@@ -65,7 +62,7 @@ function Home() {
             </Input>
             <ListGroup>
                 {
-                    page.length != 0 ? page.map((post: Ipost) => <ListGroupItem
+                    page.length !== 0 ? page.map((post: Ipost) => <ListGroupItem
                         className={"list-item"}
                         key={post.id}
                         color={post.color}
