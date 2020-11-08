@@ -70,8 +70,8 @@ function Home() {
                         <h2 className="subtitle">There's no one here.</h2>
                 }
             </ListGroup>
-            <Link to={`/${previousSite}`}><Button disabled={!siteNumber ? true : false} color="primary">Back</Button></Link>
-            <Link to={`/${nextSite}`}><Button disabled={nextSite * 5 >= posts!.length ? true : false} color="primary">Forward</Button></Link>
+            <Link to={`/${previousSite}`}><Button disabled={!siteNumber ? true : false} color="secondary">Back</Button></Link>
+            <Link to={`/${nextSite}`}><Button disabled={nextSite * 5 >= posts!.length ? true : false} color="secondary">Forward</Button></Link>
         </div>
     );
 }
