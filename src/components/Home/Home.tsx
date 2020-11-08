@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import Ipost from './utils/Ipost';
 import addAcolor from './utils/addColor';
-import filter from './utils/filter';
+import filterWord from './utils/filterWord';
 
 import { Button, ListGroup, ListGroupItem, Input } from 'reactstrap';
 import './Home.scss';
@@ -41,7 +41,7 @@ function Home() {
 
 
     useEffect(() => {
-        setPage(addAcolor(filter(search, posts)).slice(start, stop))
+        setPage(addAcolor(filterWord(search, posts)).slice(start, stop))
     }, [posts, pageNumber, search])
 
 

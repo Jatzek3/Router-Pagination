@@ -1,6 +1,6 @@
 import Ipost from './Ipost';
 
-const filter = (searchingFor: string, postsList: Ipost[]) => {
+const filterWord = (searchingFor: string, postsList: Ipost[]) => {
     if (searchingFor === "") {
         return postsList
     } else {
@@ -10,4 +10,4 @@ const filter = (searchingFor: string, postsList: Ipost[]) => {
     }
 }
 
-export default filter
+export default filterWord
