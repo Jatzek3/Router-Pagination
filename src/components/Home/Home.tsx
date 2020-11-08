@@ -5,10 +5,11 @@ import axios from 'axios';
 
 import Ipost from './utils/Ipost';
 import addAcolor from './utils/addColor';
-
+import filter from './utils/filter';
 
 import { Button, ListGroup, ListGroupItem, Input } from 'reactstrap';
 import './Home.scss';
+
 
 
 function Home() {
@@ -40,12 +41,7 @@ function Home() {
 
 
     useEffect(() => {
-        const filt = !search ? posts :
-            posts!.filter((post: Ipost) => {
-                return post.title.toLowerCase().includes(search.toLowerCase())
-            })
-        setPage(addAcolor(filt).slice(start, stop))
-        console.log(posts, page, "use effect sideE")
+        setPage(addAcolor(filter(search, posts)).slice(start, stop))
     }, [posts, pageNumber, search])
 
 
@@ -62,16 +58,18 @@ function Home() {
             </Input>
             <ListGroup>
                 {
-                    page.length !== 0 ? page.map((post: Ipost) => <ListGroupItem
-                        className={"list-item"}
-                        key={post.id}
-                        color={post.color}
-                    >{post!.title}</ListGroupItem>)
+                    page.length !== 0 ?
+                        page.map((post: Ipost) =>
+                            <ListGroupItem
+                                className={"list-item"}
+                                key={post.id}
+                                color={post.color}
+                            >{post!.title}
+                            </ListGroupItem>)
                         :
-                        <h1> No ones here</h1>
+                        <h2 className="subtitle">There's no one here.</h2>
                 }
             </ListGroup>
-            {/* A little problem that on start it display blank page instead of 1st */}
             <Link to={`/${previousSite}`}><Button disabled={!siteNumber ? true : false} color="primary">Back</Button></Link>
             <Link to={`/${nextSite}`}><Button disabled={nextSite * 5 >= posts!.length ? true : false} color="primary">Forward</Button></Link>
         </div>

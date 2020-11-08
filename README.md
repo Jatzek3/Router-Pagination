@@ -23,6 +23,5 @@ This app didnt't require to much external inspiration. I practiced and got accus
 - React Router
 - Typescript
 - Sass
-- BEM
 - Bootstrap
 - Reactstrap

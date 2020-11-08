@@ -15,7 +15,7 @@ import {
 function Navigation() {
     return (
         <Navbar color="light" light expand="md">
-            <h1>Let's Paginate!</h1>
+            <NavbarBrand className="logo">Let's Paginate!</NavbarBrand>
             <Nav className="ml-auto" navbar>
                 <NavItem>
                     <NavLink><Link to='/'>Home</Link></NavLink>
